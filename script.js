@@ -5,6 +5,7 @@ const locations = {
     name: "玄関",
     description: "出口には電子ロックがかかっています。",
     image: "images/entrance.jpg",
+    quizImage: "images/quiz1.png",
     hint: "1桁目は「2」",
     moves: [
       { to: "hallway", label: "廊下へ", pitch: -10, yaw: 0 }
@@ -16,6 +17,7 @@ const locations = {
     name: "廊下",
     description: "薄暗い廊下が続いています。",
     image: "images/hallway.jpg",
+    quizImage: "images/quiz2.png",
     hint: "2桁目は「7」",
     moves: [
       { to: "entrance", label: "玄関へ", pitch: -10, yaw: 180 },
@@ -92,6 +94,29 @@ function collectHint(locationId) {
   viewer.removeHotSpot(`hint-${locationId}`, locationId);
 }
 
+// 謎解き画像をポップアップ表示する関数
+function openQuiz(locationId) {
+  const quizImage = locations[locationId].quizImage;
+
+  if (!quizImage) {
+    showMessage("ここには謎解き画像がありません。");
+    return;
+  }
+
+  const modal = document.getElementById("quiz-modal");
+  const image = document.getElementById("quiz-image");
+
+  image.src = quizImage;
+  image.alt = `${locations[locationId].name}の謎解き問題`;
+
+  modal.classList.remove("hidden");
+}
+
+// 謎解き画像を閉じる関数
+function closeQuiz() {
+  document.getElementById("quiz-modal").classList.add("hidden");
+}
+
 // 各場所のヒントポイントを作成する関数
 function createHintHotspot(locationId) {
   const location = locations[locationId];
@@ -101,11 +126,19 @@ function createHintHotspot(locationId) {
     pitch: location.hintPosition.pitch,
     yaw: location.hintPosition.yaw,
     cssClass: "hint-hotspot",
+
     createTooltipFunc: function(element) {
       element.title = "調べる";
     },
+
     clickHandlerFunc: function() {
-      collectHint(locationId);
+      // 謎解き画像がある場所では画像を表示する
+      if (location.quizImage) {
+        openQuiz(locationId);
+      } else {
+        // 謎解き画像がない場所では従来のヒントを取得する
+        collectHint(locationId);
+      }
     }
   };
 }
@@ -165,11 +198,36 @@ function checkPassword() {
 
   if (input === "2749") {
     gameCleared = true;
+
     document.getElementById("lock-panel").classList.add("hidden");
+
     showMessage("脱出成功！ おめでとうございます！");
   } else {
     showMessage("暗証番号が違います。");
   }
+}
+
+// 謎解きポップアップの操作を設定する関数
+function setupQuizModal() {
+  const modal = document.getElementById("quiz-modal");
+  const closeButton = document.getElementById("quiz-close");
+
+  // 閉じるボタンを押したら閉じる
+  closeButton.addEventListener("click", closeQuiz);
+
+  // ポップアップの背景をクリックしたら閉じる
+  modal.addEventListener("click", function(event) {
+    if (event.target === modal) {
+      closeQuiz();
+    }
+  });
+
+  // Escapeキーでも閉じられるようにする
+  document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+      closeQuiz();
+    }
+  });
 }
 
 // ゲームを初期化する関数
@@ -185,13 +243,19 @@ function initializeGame() {
     scenes: createScenes()
   });
 
+  // 場所が切り替わったときに画面を更新する
   viewer.on("scenechange", function(sceneId) {
     updateLocation(sceneId);
   });
 
+  // 暗証番号の解除ボタンを設定する
   document.getElementById("unlock-btn")
     .addEventListener("click", checkPassword);
 
+  // 謎解きポップアップの操作を設定する
+  setupQuizModal();
+
+  // 最初の場所を表示する
   updateLocation("entrance");
 }
 
