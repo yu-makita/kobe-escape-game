@@ -144,3 +144,47 @@ input {
     font-size: 15px;
   }
 }
+
+
+/* 謎解き画像のポップアップ */
+.quiz-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.quiz-modal.hidden {
+  display: none;
+}
+
+.quiz-modal-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+#quiz-image {
+  display: block;
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+}
+
+.quiz-close {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background: #fff;
+  color: #111;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  font-size: 25px;
+  cursor: pointer;
+}
