@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>神戸大学 脱出ゲーム</title>
+
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/pannellum@2.5.7/build/pannellum.css">
+  <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.7/build/pannellum.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div id="game">
+    <header>
+      <h1>神戸大学 脱出ゲーム</h1>
+      <span id="progress">ヒント 0 / 4</span>
+    </header>
+
+    <div id="panorama"></div>
+
+    <main>
+      <h2 id="location-name"></h2>
+      <p id="description"></p>
+      <p id="message" aria-live="polite"></p>
+
+      <section id="inventory">
+        <h3>入手したヒント</h3>
+        <ul id="hint-list"></ul>
+      </section>
+
+      <section id="lock-panel" class="hidden">
+        <h3>出口の電子ロック</h3>
+        <p>4桁の暗証番号を入力してください。</p>
+        <input
+          type="text"
+          id="password"
+          inputmode="numeric"
+          maxlength="4"
+          placeholder="0000"
+        >
+        <button id="unlock-btn">解除する</button>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

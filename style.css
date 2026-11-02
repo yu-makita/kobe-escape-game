@@ -1,0 +1,146 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #101820;
+  color: white;
+  font-family: sans-serif;
+}
+
+#game {
+  max-width: 900px;
+  margin: auto;
+}
+
+header {
+  padding: 15px;
+  background: #1c2936;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  margin: 0;
+  font-size: 18px;
+}
+
+#progress {
+  font-size: 13px;
+}
+
+/* 360度写真の表示領域 */
+#panorama {
+  width: 100%;
+  height: 65vh;
+  min-height: 350px;
+  background: #253341;
+}
+
+/* 写真内の移動用矢印 */
+.move-hotspot {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(35, 91, 155, 0.9);
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+.move-hotspot::after {
+  content: "➜";
+  display: block;
+  color: white;
+  font-size: 24px;
+  text-align: center;
+  line-height: 34px;
+}
+
+/* 写真内のヒント */
+.hint-hotspot {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #e1b642;
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+.hint-hotspot::after {
+  content: "?";
+  display: block;
+  color: #17202a;
+  font-weight: bold;
+  text-align: center;
+  line-height: 30px;
+  font-size: 22px;
+}
+
+main {
+  padding: 15px;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+#description {
+  color: #c7d0d8;
+}
+
+#inventory,
+#lock-panel {
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  background: #1d2c3a;
+}
+
+h3 {
+  margin-top: 0;
+}
+
+li {
+  margin-bottom: 8px;
+}
+
+button {
+  background: #344c63;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 18px;
+  cursor: pointer;
+}
+
+input {
+  width: 120px;
+  padding: 12px;
+  font-size: 20px;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+}
+
+#message {
+  min-height: 24px;
+  color: #f2d78b;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  #panorama {
+    height: 58vh;
+    min-height: 300px;
+  }
+
+  h1 {
+    font-size: 15px;
+  }
+}
